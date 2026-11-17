@@ -1,19 +1,16 @@
-<!doctype html><html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><style>body{margin:0}img{max-width:100%}</style></head><body>
+<!doctype html><html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name="color-scheme" content="light only"><style>body{margin:0}img{max-width:100%}</style></head><body>
 <title>런치리그 근무표</title>
 <meta name="claude:viewport-fit-sides" content="cover">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Black+Han+Sans&amp;family=Noto+Sans+KR:wght@400;500;700;900&amp;display=swap">
 <style id="app-style">
 /* Layout: one phone-width column of game cards, a sticky "내 근무" finder on top */
 :root{
+  color-scheme:light;
   --bg:#EEF1F5; --card:#FFFFFF; --ink:#0E1A2B; --muted:#526074; --line:#D6DCE5;
   --ref:#C2410C; --ref-soft:#FFE6D5; --staff:#8A6100; --staff-soft:#FFF1C2;
   --accent:#FF7A1A; --hi:#0E1A2B; --hi-ink:#FFD43B; --clash:#C2255C; --clash-soft:#FFE3EC;
   --display:'Black Han Sans','Noto Sans KR',sans-serif; --body:'Noto Sans KR',system-ui,sans-serif;
 }
-@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
-  --bg:#0B1422; --card:#15233A; --ink:#EEF2F7; --muted:#A3B1C4; --line:#283A55;
-  --ref:#FFB27A; --ref-soft:#4A2814; --staff:#FFD43B; --staff-soft:#3F3410;
-  --accent:#FF8A33; --hi:#FFD43B; --hi-ink:#0E1A2B; --clash:#FF8FB1; --clash-soft:#4A1A2B; color-scheme:dark}}
 :root[data-theme="dark"]{
   --bg:#0B1422; --card:#15233A; --ink:#EEF2F7; --muted:#A3B1C4; --line:#283A55;
   --ref:#FFB27A; --ref-soft:#4A2814; --staff:#FFD43B; --staff-soft:#3F3410;
