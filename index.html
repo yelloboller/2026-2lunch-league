@@ -95,8 +95,8 @@ select.sm{font:inherit;font-size:14px;padding:6px 8px;border-radius:8px;border:1
 .sg-steps{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:12px 14px;margin:0;display:flex;flex-direction:column;gap:6px;font-size:14px;list-style:none}
 .sg-steps li{display:flex;gap:8px;align-items:baseline}
 .sg-steps b{flex:none;width:22px;height:22px;border-radius:50%;background:var(--hi);color:var(--hi-ink);display:inline-flex;align-items:center;justify-content:center;font-size:12px}
-.tabs{display:grid;grid-template-columns:1fr 1fr 1fr;gap:6px;background:var(--card);border:1px solid var(--line);border-radius:14px;padding:5px}
-.tabs a{display:block;text-align:center;padding:9px 0;border-radius:10px;font-weight:900;color:var(--muted);text-decoration:none}
+.tabs{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:6px;background:var(--card);border:1px solid var(--line);border-radius:14px;padding:5px}
+.tabs a{display:block;text-align:center;padding:9px 0;white-space:nowrap;font-size:15px;border-radius:10px;font-weight:900;color:var(--muted);text-decoration:none}
 .tabs a[aria-current="page"]{background:var(--hi);color:var(--hi-ink)}
 .bk{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:12px;display:flex;flex-direction:column;gap:8px}
 .bk-scroll{overflow-x:auto;-webkit-overflow-scrolling:touch}
@@ -115,6 +115,23 @@ select.sm{font:inherit;font-size:14px;padding:6px 8px;border-radius:8px;border:1
 .bk-cap{font-family:var(--display);font-size:20px;fill:var(--ink)}
 .bk-note{margin:0;font-size:13px;color:var(--muted)}
 .bk-note b{color:var(--accent)}
+.op-intro{background:var(--staff-soft);border-radius:12px;padding:10px 14px;font-size:14px;margin:0}
+.op-intro b{font-weight:900}
+.op-phase{display:flex;flex-direction:column;gap:0}
+.op-ph{display:flex;align-items:baseline;gap:8px;font-family:var(--display);font-weight:400;font-size:22px;margin:8px 0 10px}
+.op-ph small{font-family:var(--body);font-size:12px;font-weight:700;letter-spacing:.12em;color:var(--staff)}
+.op-list{list-style:none;margin:0;padding:0;display:flex;flex-direction:column}
+.op-step{display:grid;grid-template-columns:34px minmax(0,1fr);gap:12px;position:relative;padding-bottom:12px}
+.op-step:not(:last-child)::before{content:"";position:absolute;left:16px;top:34px;bottom:0;width:2px;background:var(--line)}
+.op-n{width:34px;height:34px;border-radius:50%;background:var(--hi);color:var(--hi-ink);font-weight:900;font-size:15px;display:flex;align-items:center;justify-content:center;font-variant-numeric:tabular-nums;position:relative}
+.op-card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:10px 14px;display:flex;flex-direction:column;gap:4px;min-width:0}
+.op-card h3{margin:0;font-size:16px;font-weight:900}
+.op-card p{margin:0;font-size:14px;color:var(--muted);line-height:1.5}
+.op-card p b{color:var(--ink)}
+.op-tag{align-self:flex-start;font-size:11px;font-weight:900;border-radius:999px;padding:2px 8px;background:var(--ref-soft);color:var(--ref)}
+.op-alert{background:var(--card);border:2px solid var(--clash);border-radius:16px;padding:12px 14px;display:flex;flex-direction:column;gap:6px}
+.op-alert h3{margin:0;font-size:16px;font-weight:900;color:var(--clash)}
+.op-alert ol{margin:0;padding-left:20px;font-size:14px;display:flex;flex-direction:column;gap:2px}
 @media (prefers-reduced-motion: reduce){*{transition:none!important}}
 </style>
 <main id="app" class="wrap"><p class="eyebrow">GALMAE 3RD GRADE · LUNCH LEAGUE BASKETBALL</p><h1>심판·운영진 근무표</h1><p class="sub">근무표를 불러오는 중이에요.</p></main>
@@ -209,7 +226,7 @@ select.sm{font:inherit;font-size:14px;padding:6px 8px;border-radius:8px;border:1
   // 대진표 그림 (게시용 대진표와 같은 모양)
   var SX = [83,159,239,332,410,488,581,698,830,908,986];
   var J = [[199,360],[449,360],[947,360],[141,285],[390,285],[640,285],[889,285],[265,165],[764,165],[922,50],[515,70]];
-  function view(){ return location.hash === '#bracket' ? 'bracket' : location.hash === '#signals' ? 'signals' : 'duty'; }
+  function view(){ return location.hash === '#bracket' ? 'bracket' : location.hash === '#signals' ? 'signals' : location.hash === '#staff' ? 'staff' : 'duty'; }
   // 심판 수신호 그림: 정면에서 본 사람, 어깨 L(44,46) R(76,46)
   function A(p){ return '<polyline class="sg-arm" points="' + p + '"/>'; }
   function F(x, y){ return '<circle class="sg-fist" cx="' + x + '" cy="' + y + '" r="6"/>'; }
@@ -259,6 +276,43 @@ select.sm{font:inherit;font-size:14px;padding:6px 8px;border-radius:8px;border:1
       {k:55, n:'퇴장', d:'두 주먹을 머리 위로 들어요. 바로 선생님을 불러요.', f: A('44,46 38,26 36,8') + A('76,46 82,26 84,8') + F(36,6) + F(84,6)}
     ]}
   ];
+  // 운영진 역할: 시간 순서
+  var STAFF_FLOW = [
+    {h:'경기 전', e:'BEFORE', s:[
+      ['기록석에 모이기', '점심을 먹고 바로 체육관 기록석으로 와요. 운영진 2명이 <b>점수판 담당</b>과 <b>오더지 담당</b>을 나눠요.'],
+      ['점수판 켜고 초기화', '점수 <b>0 : 0</b>, 쿼터 시간을 맞추고 24초를 준비해요.'],
+      ['오더지 받고 명단 확인', '두 팀 주장에게 오더지를 받아요. 명단과 실제로 나온 선수가 같은지 확인해요. <b>명단에 없는 학생은 뛸 수 없어요.</b>'],
+      ['조끼 나눠 주기', '두 팀 조끼 색이 다른지, 모든 선수가 조끼를 입었는지 확인해요.'],
+      ['자리 안내', '선수는 <b>체육관 시계 반대쪽 벽</b>, 응원하는 친구는 <b>나머지 벽</b>으로. 코트 라인 안으로 들어오지 않게 해요.'],
+      ['복장 확인 후 “준비 완료”', '<b>슬리퍼를 신은 선수</b>가 없는지 확인해요. 문제가 없으면 심판에게 준비가 끝났다고 알려요.']
+    ]},
+    {h:'경기 중', e:'DURING', s:[
+      ['경기 시간 시작', '점프볼과 함께 시간을 시작해요. <b>흘려 타임</b>이라 휘슬이 불려도 멈추지 않아요. 심판이 “시간 정지!”라고 할 때만 멈춰요.'],
+      ['점수 올리기', '심판의 득점 신호를 보고 바로 점수판에 올려요. 3점은 <b>손가락 3개</b>인지 꼭 확인해요.'],
+      ['24초 재기', '공격이 바뀌면 24초를 다시 시작해요. 0이 되면 점수판에서 <b>부저</b>가 울려요.'],
+      ['파울 기록', '심판이 알려 준 선수 이름 옆에 오더지로 표시해요. 4개째면 <b>“○○ 4개!”</b>, 5개면 퇴장이라 바로 알려요. T·U파울은 따로 적고, 같은 선수가 2개째면 바로 알려요.'],
+      ['헬드볼 공격권', '헬드볼이 나오면 공격권 표시를 보고 알려 줘요. 스로인 뒤에는 표시를 반대 팀으로 바꿔요.']
+    ]},
+    {h:'쿼터 사이', e:'BETWEEN', s:[
+      ['쿼터 선수 확인', '1·3쿼터는 <b>여학생 5명</b>, 2·4쿼터는 <b>남학생 5명</b>이에요. 3·4쿼터 전에는 앞 쿼터에 안 뛴 2명이 꼭 들어왔는지 오더지로 확인해요.']
+    ]},
+    {h:'경기 끝', e:'AFTER', s:[
+      ['동점이면 승부던지기 기록', '4쿼터가 끝나고 동점이면 자유투 승부던지기를 해요. 한 명씩 <b>성공 ○ / 실패 ✕</b>를 차례대로 적어요.'],
+      ['최종 점수 확인', '심판과 함께 최종 점수를 확인하고 오더지에 적어요.'],
+      ['조끼 회수', '조끼를 모두 걷어 개수를 세고, 색깔별로 정리해 제자리에 둬요. 모자라면 선생님께 말해요.'],
+      ['정리하기', '점수판을 끄고 공과 장비를 정리해요. 선수 좌석과 관중석에 남은 물건이 없는지 봐요.'],
+      ['결과 보고', '오더지와 결과(날짜, 두 팀, 최종 점수, 퇴장·T·U파울)를 담당 선생님께 내요. 문제가 있었다면 그날 바로 말해요.']
+    ]}
+  ];
+  function staffView(){
+    var n = 0;
+    var h = '<p class="op-intro"><b>운영진은 심판의 두 번째 눈!</b> 경기 전부터 정리까지 순서대로 해요. 헷갈리면 혼자 고치지 말고, 경기가 멈췄을 때 심판에게 확인해요.</p>';
+    STAFF_FLOW.forEach(function(ph){
+      h += '<section class="op-phase"><h2 class="op-ph">' + ph.h + '<small>' + ph.e + '</small></h2><ol class="op-list">' + ph.s.map(function(st){ n++; return '<li class="op-step"><span class="op-n">' + n + '</span><div class="op-card"><h3>' + st[0] + '</h3><p>' + st[1] + '</p></div></li>'; }).join('') + '</ol></section>';
+    });
+    h += '<section class="op-alert" aria-label="선수가 다쳤을 때"><h3>선수가 다쳤을 때</h3><ol><li>심판의 “시간 정지!”에 바로 시간을 멈춰요.</li><li>담당 선생님을 바로 불러요.</li><li>교체가 있으면 오더지에 교체 선수를 적어요. (같은 성별, 같은 팀)</li><li>“재개!” 신호에 시간을 다시 시작해요.</li><li>다친 학생 이름과 상황을 결과 보고에 적어요.</li></ol></section>';
+    return h;
+  }
   function signalsView(){
     var h = '<ol class="sg-steps" aria-label="파울 판정 순서"><li><b>1</b>휘슬과 함께 주먹 쥔 팔을 머리 위로</li><li><b>2</b>반칙 종류 신호 (밀기·잡기·블로킹…)</li><li><b>3</b>반칙한 선수를 가리키며 운영진에게 알리기</li><li><b>4</b>벌칙 신호: 자유투 개수(손가락) 또는 스로인 방향</li></ol>';
     SIGNALS.forEach(function(sec){
@@ -362,10 +416,11 @@ select.sm{font:inherit;font-size:14px;padding:6px 8px;border-radius:8px;border:1
     if (!drawn) h += '<p class="banner">대진 추첨이 끝나면 근무자가 배정돼요. 준결승·결승처럼 올라올 반을 모르는 경기는 결과가 나오는 대로 채워요.</p>';
     else h += '<p class="banner">자기 반이 올라올 수 있는 경기는 맡지 않아요. 다음 경기 근무자는 앞 경기 결과가 나오면 채워져요.</p>';
     var v = editing ? 'duty' : view();
-    if (!editing) h += '<nav class="tabs" aria-label="보기 선택"><a href="#duty"' + (v === 'duty' ? ' aria-current="page"' : '') + '>근무표</a><a href="#bracket"' + (v === 'bracket' ? ' aria-current="page"' : '') + '>대진표</a><a href="#signals"' + (v === 'signals' ? ' aria-current="page"' : '') + '>수신호</a></nav>';
+    if (!editing) h += '<nav class="tabs" aria-label="보기 선택"><a href="#duty"' + (v === 'duty' ? ' aria-current="page"' : '') + '>근무표</a><a href="#bracket"' + (v === 'bracket' ? ' aria-current="page"' : '') + '>대진표</a><a href="#signals"' + (v === 'signals' ? ' aria-current="page"' : '') + '>수신호</a><a href="#staff"' + (v === 'staff' ? ' aria-current="page"' : '') + '>운영진</a></nav>';
     if (editing) h += drawPanel(); else if (v === 'duty') h += finder();
     if (v === 'bracket') h += bracketView();
     else if (v === 'signals') h += signalsView();
+    else if (v === 'staff') h += staffView();
     else ROUNDS.forEach(function(r){
       var list = S.games.map(function(g, i){ return [g, i]; }).filter(function(x){ return x[0].round === r; });
       if (!list.length) return;
