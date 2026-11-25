@@ -143,10 +143,17 @@ select.sm{font:inherit;font-size:14px;padding:6px 8px;border-radius:8px;border:1
 .qr-box svg{width:100%;max-width:280px;height:auto;display:block}
 .qr-box p{margin:0;font-size:13px;color:var(--muted);word-break:break-all}
 .qr-box button{width:100%}
+.game.done{background:#E9F6EE;border:2px solid #1F8A4C}
+.game.done .when{background:#1F8A4C;color:#FFFFFF}
+.game.done .when .w{color:#FFFFFF}
+.when .ck{font-size:18px;font-weight:900;line-height:1}
+.done-tag{font-size:12px;font-weight:900;background:#1F8A4C;color:#FFFFFF;border-radius:999px;padding:2px 9px}
+.game.done .chip{opacity:.7}
+.mine-list li.done{background:#E9F6EE;color:#1F6B3D;text-decoration:line-through}
 @media (prefers-reduced-motion: reduce){*{transition:none!important}}
 </style>
 <main id="app" class="wrap"><p class="eyebrow">GALMAE 3RD GRADE · LUNCH LEAGUE BASKETBALL</p><h1>심판·운영진 근무표</h1><p class="sub">근무표를 불러오는 중이에요.</p></main>
-<script type="application/json" id="state">{"updated":"11/24","reserve":"12/14(월)","slots":["3","1","9","5","7","2","8","10","4","6","11"],"roster":{"refs":[{"name":"이한준","cls":1},{"name":"전제범","cls":1},{"name":"이하준","cls":2},{"name":"김민찬","cls":4},{"name":"정윤성","cls":4},{"name":"이윤성","cls":10},{"name":"양승범","cls":11},{"name":"주다민","cls":11}],"staff":[{"name":"김재윤","cls":8},{"name":"박시은","cls":8},{"name":"이예은","cls":8},{"name":"박한별","cls":11},{"name":"백선호","cls":11},{"name":"윤서영","cls":11},{"name":"이수민","cls":11},{"name":"조하은","cls":11}]},"games":[{"no":"1경기","round":"예선","date":"11/24(화)","win":"1","refs":["이하준","이윤성"],"staff":["박한별","윤서영"],"score":"22:14"},{"no":"2경기","round":"예선","date":"11/25(수)","win":"","refs":["이한준","전제범"],"staff":["김재윤","박시은"]},{"no":"3경기","round":"예선","date":"11/26(목)","win":"","refs":["김민찬","정윤성"],"staff":["김재윤","이예은"]},{"no":"4경기","round":"8강","date":"11/27(금)","win":"","refs":["양승범","주다민"],"staff":["이수민","조하은"]},{"no":"5경기","round":"8강","date":"11/30(월)","win":"","refs":["이한준","전제범"],"staff":["박한별","윤서영"]},{"no":"6경기","round":"8강","date":"12/1(화)","win":"","refs":["김민찬","정윤성"],"staff":["백선호","이수민"]},{"no":"7경기","round":"8강","date":"12/2(수)","win":"","refs":["이하준","이윤성"],"staff":["이예은","박시은"]},{"no":"8경기","round":"준결승","date":"12/3(목)","win":"","refs":["양승범","주다민"],"staff":["백선호","조하은"]},{"no":"9경기","round":"준결승","date":"12/4(금)","win":"","refs":["이한준","전제범"],"staff":["",""]},{"no":"3·4위전","round":"3·4위전","date":"12/7(월)","win":"","refs":["",""],"staff":["",""]},{"no":"결승","round":"결승","date":"12/11(금)","win":"","refs":["",""],"staff":["",""]}]}</script>
+<script type="application/json" id="state">{"updated":"11/25","reserve":"12/14(월)","slots":["3","1","9","5","7","2","8","10","4","6","11"],"roster":{"refs":[{"name":"이한준","cls":1},{"name":"전제범","cls":1},{"name":"이하준","cls":2},{"name":"김민찬","cls":4},{"name":"정윤성","cls":4},{"name":"이윤성","cls":10},{"name":"양승범","cls":11},{"name":"주다민","cls":11}],"staff":[{"name":"김재윤","cls":8},{"name":"박시은","cls":8},{"name":"이예은","cls":8},{"name":"박한별","cls":11},{"name":"백선호","cls":11},{"name":"윤서영","cls":11},{"name":"이수민","cls":11},{"name":"조하은","cls":11}]},"games":[{"no":"1경기","round":"예선","date":"11/24(화)","win":"1","refs":["이하준","이윤성"],"staff":["박한별","윤서영"],"score":"22:14"},{"no":"2경기","round":"예선","date":"11/25(수)","win":"2","refs":["이한준","전제범"],"staff":["김재윤","박시은"],"score":"18:4"},{"no":"3경기","round":"예선","date":"11/26(목)","win":"","refs":["김민찬","정윤성"],"staff":["김재윤","이예은"]},{"no":"4경기","round":"8강","date":"11/27(금)","win":"","refs":["양승범","주다민"],"staff":["이수민","조하은"]},{"no":"5경기","round":"8강","date":"11/30(월)","win":"","refs":["이한준","전제범"],"staff":["박한별","윤서영"]},{"no":"6경기","round":"8강","date":"12/1(화)","win":"","refs":["김민찬","정윤성"],"staff":["백선호","이수민"]},{"no":"7경기","round":"8강","date":"12/2(수)","win":"","refs":["이하준","이윤성"],"staff":["이예은","박시은"]},{"no":"8경기","round":"준결승","date":"12/3(목)","win":"","refs":["양승범","주다민"],"staff":["백선호","조하은"]},{"no":"9경기","round":"준결승","date":"12/4(금)","win":"","refs":["이한준","전제범"],"staff":["",""]},{"no":"3·4위전","round":"3·4위전","date":"12/7(월)","win":"","refs":["",""],"staff":["",""]},{"no":"결승","round":"결승","date":"12/11(금)","win":"","refs":["",""],"staff":["",""]}]}</script>
 <script id="app-script">
 (function(){
   var S = JSON.parse(document.getElementById('state').textContent);
@@ -389,7 +396,7 @@ select.sm{font:inherit;font-size:14px;padding:6px 8px;border-radius:8px;border:1
     else {
       var d = [];
       S.games.forEach(function(g, i){ ['refs','staff'].forEach(function(k){ if (g[k].indexOf(me) >= 0) d.push({g:g, i:i, k:k}); }); });
-      body = d.length ? '<ul class="mine-list">' + d.map(function(x){ var c = clashKind(x.i, me); return '<li' + (c ? ' class="clash"' : '') + '>' + esc(x.g.date) + ' · ' + esc(x.g.no) + ' · ' + ROLE[x.k] + (c === 'own' ? ' (자기 반 경기, 선생님께 알리기)' : '') + '</li>'; }).join('') + '</ul>'
+      body = d.length ? '<ul class="mine-list">' + d.map(function(x){ var c = clashKind(x.i, me); return x.g.win ? '<li class="done">✓ ' + esc(x.g.date) + ' · ' + esc(x.g.no) + ' · ' + ROLE[x.k] + '</li>' : '<li' + (c ? ' class="clash"' : '') + '>' + esc(x.g.date) + ' · ' + esc(x.g.no) + ' · ' + ROLE[x.k] + (c === 'own' ? ' (자기 반 경기, 선생님께 알리기)' : '') + '</li>'; }).join('') + '</ul>'
         : '<p class="empty">아직 배정된 날이 없어요. 대진이 정해지면 채워져요.</p>';
     }
     return '<section class="finder" aria-label="내 근무 찾기"><label for="me">내 근무 찾기</label><select id="me">' + nameOptions() + '</select>' + body + '</section>';
@@ -413,7 +420,7 @@ select.sm{font:inherit;font-size:14px;padding:6px 8px;border-radius:8px;border:1
   }
   function card(g, gi){
     var dt = splitDate(g.date), mine = me && (g.refs.indexOf(me) >= 0 || g.staff.indexOf(me) >= 0);
-    var inner = '<div class="meta"><span class="no">' + esc(g.no) + '</span>' + (g.win && !editing ? '<span class="won">' + esc(g.win) + '반 승리' + (g.score ? ' · ' + esc(g.score) : '') + '</span>' : '') + '</div><p class="match">' + sideLabel(gi, 0) + ' vs ' + sideLabel(gi, 1) + '</p>';
+    var inner = '<div class="meta"><span class="no">' + esc(g.no) + '</span>' + (g.win && !editing ? '<span class="done-tag">경기 완료</span><span class="won">' + esc(g.win) + '반 승리' + (g.score ? ' · ' + esc(g.score) : '') + '</span>' : '') + '</div><p class="match">' + sideLabel(gi, 0) + ' vs ' + sideLabel(gi, 1) + '</p>';
     if (editing) {
       inner += '<div class="edit-row">결과 ' + winSelect(gi) + '</div><div class="edit-grid">' + poolSelect(gi, 'refs', 0, g.refs[0]) + poolSelect(gi, 'refs', 1, g.refs[1]) + poolSelect(gi, 'staff', 0, g.staff[0]) + poolSelect(gi, 'staff', 1, g.staff[1]) + '</div>';
     } else if (!g.refs[0] && !g.refs[1] && !g.staff[0] && !g.staff[1]) {
@@ -422,7 +429,8 @@ select.sm{font:inherit;font-size:14px;padding:6px 8px;border-radius:8px;border:1
       inner += '<div class="duty"><span class="lab refs">심판</span>' + chip(g.refs[0], 'refs', gi) + chip(g.refs[1], 'refs', gi) + '</div>' +
         '<div class="duty"><span class="lab staff">운영</span>' + chip(g.staff[0], 'staff', gi) + chip(g.staff[1], 'staff', gi) + '</div>';
     }
-    return '<article class="game' + (mine && !editing ? ' mine' : '') + '"><div class="when"><span class="d">' + esc(dt[0]) + '</span><span class="w">' + esc(dt[1]) + '</span></div><div class="gbody">' + inner + '</div></article>';
+    var done = !!g.win && !editing;
+    return '<article class="game' + (mine && !editing ? ' mine' : '') + (done ? ' done' : '') + '"><div class="when">' + (done ? '<span class="ck" aria-hidden="true">✓</span>' : '') + '<span class="d">' + esc(dt[0]) + '</span><span class="w">' + (done ? '완료' : esc(dt[1])) + '</span></div><div class="gbody">' + inner + '</div></article>';
   }
   function render(){
     var drawn = S.slots.every(function(s){ return s; });
